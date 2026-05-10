@@ -49,6 +49,20 @@ function App() {
           <li key={i}>Title: {movie.title} - Genre: {movie.genre}</li>
         ))}
       </ul>
+      <hr />
+      <div>
+        <form action="">
+          <div class="mb-3">
+            <label className="form-label">Title</label>
+            <input type="text" className="form-control" />
+          </div>
+          <div class="mb-3">
+            <label className="form-label">Genre</label>
+            <input type="text" className="form-control" />
+          </div>
+          <button type="submit" class="btn btn-primary my-2">Add Movie</button>
+        </form>
+      </div>
     </div>
     </div>
     </div>
