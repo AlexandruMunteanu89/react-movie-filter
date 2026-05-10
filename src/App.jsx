@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 function App() {
@@ -12,26 +12,25 @@ function App() {
  ]
 
   const [selectedGenre, setSelectedGenre] = useState('Tutti');
+  const [search, setSearch] = useState('');
 
   
   const handleGenreChange = (event) => {
     setSelectedGenre(event.target.value);
+    setSearch(event.target.value);
   };
 
   // Logica di filtraggio
-  const filteredMovies = selectedGenre === 'Tutti' 
+  const filteredMovies = selectedGenre === 'Tutti'
     ? moviesData 
-    : moviesData.filter(movie => movie.genre === selectedGenre);
+    : moviesData.filter(singleMovie => singleMovie.genre === selectedGenre || singleMovie.title === search);
 
- 
  
 
   return (
     <>
 <div>
-      <h1>Lista Filmi</h1>
-      
-      
+      <h1>Lista Filmi</h1>  
       <select onChange={handleGenreChange} value={selectedGenre}>
         <option value="Tutti">Tutti i generi</option>
         <option value="Azione">Azione</option>
@@ -39,15 +38,15 @@ function App() {
         <option value="Romantico">Romantico</option>
         <option value="Thriller">Thriller</option>
       </select>
-
-      
+      <div>
+        <input onChange={handleGenreChange} value={search} ></input>
+      </div>
       <ul>
-        {filteredMovies.map(movie => (
-          <li key={movie}>{movie.title} ({movie.genre})</li>
+        {filteredMovies.map((movie, i) => (
+          <li key={i}>Title: {movie.title} - Genre: {movie.genre}</li>
         ))}
       </ul>
     </div>
-
 
      
     </>
