@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
@@ -29,9 +30,11 @@ function App() {
 
   return (
     <>
-<div>
-      <h1>Lista Filmi</h1>  
-      <select onChange={handleGenreChange} value={selectedGenre}>
+    <div className="container">
+    <div className="row">
+      <div className="title-div"><h1>Lista Filmi</h1></div>
+    <div className="col-6 card main-div">
+      <select className="m-2" onChange={handleGenreChange} value={selectedGenre}>
         <option value="Tutti">Tutti i generi</option>
         <option value="Azione">Azione</option>
         <option value="Fantascienza">Fantascienza</option>
@@ -39,16 +42,16 @@ function App() {
         <option value="Thriller">Thriller</option>
       </select>
       <div>
-        <input onChange={handleGenreChange} value={search} ></input>
+        <input className="m-2" onChange={handleGenreChange} value={search} placeholder="search"></input>
       </div>
-      <ul>
+      <ul className="card">
         {filteredMovies.map((movie, i) => (
           <li key={i}>Title: {movie.title} - Genre: {movie.genre}</li>
         ))}
       </ul>
     </div>
-
-     
+    </div>
+    </div>
     </>
   )
 }
