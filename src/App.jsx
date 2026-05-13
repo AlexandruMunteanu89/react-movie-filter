@@ -4,16 +4,24 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const moviesData =  [
-  { title: 'Inception', genre: 'Fantascienza' },
-  { title: 'Il Padrino', genre: 'Thriller' },
-  { title: 'Titanic', genre: 'Romantico' },
-  { title: 'Batman', genre: 'Azione' },
-  { title: 'Interstellar', genre: 'Fantascienza' },
-  { title: 'Pulp Fiction', genre: 'Thriller' },
+  { id: 1, title: 'Inception', genre: 'Fantascienza' },
+  { id: 2, title: 'Il Padrino', genre: 'Thriller' },
+  { id: 3, title: 'Titanic', genre: 'Romantico' },
+  { id: 4, title: 'Batman', genre: 'Azione' },
+  { id: 5, title: 'Interstellar', genre: 'Fantascienza' },
+  { id: 6, title: 'Pulp Fiction', genre: 'Thriller' },
  ]
+
+ const initialFormData = {
+   title: "",
+    genre: ""
+ }
 
   const [selectedGenre, setSelectedGenre] = useState('Tutti');
   const [search, setSearch] = useState('');
+  
+  //Form data
+  const [formData, setFormData] = useState(initialFormData)
 
   
   const handleGenreChange = (event) => {
@@ -22,11 +30,33 @@ function App() {
   };
 
   // Logica di filtraggio
-  const filteredMovies = selectedGenre === 'Tutti'
-    ? moviesData 
-    : moviesData.filter(singleMovie => singleMovie.genre === selectedGenre || singleMovie.title === search);
+  const [movies, setMovies] = useState(moviesData);
+  useEffect(() => {
+    const filteredMovies = selectedGenre === 'Tutti'
+      ? moviesData 
+      : moviesData.filter(singleMovie => singleMovie.genre === selectedGenre || singleMovie.title === search);
+      setMovies(filteredMovies);
+  }, [selectedGenre]);
 
- 
+    function handleAddMovie(e){
+      e.preventDefault()
+
+      console.log("Form Submitted");
+
+      //reod the form data values
+      console.log(formData);
+
+      const newMovie = {
+        id: Date.now(),
+        ...formData
+      }
+      setMovies([...movies, newMovie]);
+    }
+
+    //console.log(newMovie);
+    
+    
+    
 
   return (
     <>
@@ -45,22 +75,22 @@ function App() {
         <input className="m-2" onChange={handleGenreChange} value={search} placeholder="search"></input>
       </div>
       <ul className="card">
-        {filteredMovies.map((movie, i) => (
+        {movies.map((movie, i) => (
           <li key={i}>Title: {movie.title} - Genre: {movie.genre}</li>
         ))}
       </ul>
       <hr />
       <div>
-        <form action="">
-          <div class="mb-3">
-            <label className="form-label">Title</label>
-            <input type="text" className="form-control" />
+        <form onSubmit={handleAddMovie}>
+          <div>
+            <label htmlFor="title">Title</label><br />
+            <input name="title" className="form-control" id="title" type="text" placeholder="Type the movie title" value={formData.title} onChange={(e) => setFormData({...formData, title: e.target.value})} />
           </div>
-          <div class="mb-3">
-            <label className="form-label">Genre</label>
-            <input type="text" className="form-control" />
+          <div>
+            <label htmlFor="genre">Genre</label><br />
+            <input name="genre" className="form-control" id="genre" type="text" placeholder="Type the movie's genre" value={formData.genre} onChange={(e) => setFormData({...formData, genre: e.target.value})}/>
           </div>
-          <button type="submit" class="btn btn-primary my-2">Add Movie</button>
+          <button type="submit" className="btn btn-primary my-2">Add Movie</button>
         </form>
       </div>
     </div>

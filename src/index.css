@@ -8,7 +8,7 @@
     height: 1500px;
     /*background-color: rgb(212, 218, 216);*/
     background-image: url(https://lumiere-a.akamaihd.net/v1/images/the-mandalorian-and-grogu-special-look-sw-hero-mobile_68517f9e.jpeg?region=0,0,1280,720&width=960);
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
     background-size: contain;
 }
 .title-div{
