@@ -13,13 +13,15 @@ function App() {
  ]
 
  const initialFormData = {
-   title: "",
+    title: "",
     genre: ""
  }
 
+  
   const [selectedGenre, setSelectedGenre] = useState('Tutti');
   const [search, setSearch] = useState('');
   
+
   //Form data
   const [formData, setFormData] = useState(initialFormData)
 
@@ -31,12 +33,13 @@ function App() {
 
   // Logica di filtraggio
   const [movies, setMovies] = useState(moviesData);
+  const [filteredData, setFilteredData] = useState(movies)
   useEffect(() => {
     const filteredMovies = selectedGenre === 'Tutti'
-      ? moviesData 
-      : moviesData.filter(singleMovie => singleMovie.genre === selectedGenre || singleMovie.title === search);
-      setMovies(filteredMovies);
-  }, [selectedGenre]);
+      ? movies
+      : movies.filter(singleMovie => singleMovie.genre === selectedGenre || singleMovie.title === search);
+      setFilteredData(filteredMovies);
+  }, [selectedGenre, search, movies]);
 
     function handleAddMovie(e){
       e.preventDefault()
@@ -53,7 +56,7 @@ function App() {
       setMovies([...movies, newMovie]);
     }
 
-    //console.log(newMovie);
+    
     
     
     
@@ -75,7 +78,7 @@ function App() {
         <input className="m-2" onChange={handleGenreChange} value={search} placeholder="search"></input>
       </div>
       <ul className="card">
-        {movies.map((movie, i) => (
+        {filteredData.map((movie, i) => (
           <li key={i}>Title: {movie.title} - Genre: {movie.genre}</li>
         ))}
       </ul>
